@@ -65,7 +65,7 @@ int parsingData(ResponseData* data, reservationInfo* info) {
 	}
 	}
 	*/
-	while (info->addr[info_index] != NULL/*data->responseBody[idx] != '\0'*/) {
+	while (info->addr[info_index] != NULL) {
 		c = data->responseBody[idx++];
 		if (c == '"') {
 
@@ -104,7 +104,17 @@ int parsingData(ResponseData* data, reservationInfo* info) {
 				printf("value: %s \n", str);
 				// value 값 저장
 				strcpy(info->addr[info_index++], str);
+
 				str[0] = 0;
+
+				// 제공자
+				if (strcmp(info->status, "host") == 0) {
+					return HOST;
+				}
+				// 예약 내역 없음
+				else if (strcmp(info->status, "error") == 0) {
+					return ERROR;
+				}
 			}
 			// contents 내용 시작
 			// value_flag 를 0으로 바꿔 key부터 다시 시작하게 함
@@ -117,25 +127,15 @@ int parsingData(ResponseData* data, reservationInfo* info) {
 			}
 		}
 	}
+
 	printf("- - - RESPONSE DATA PARSING END - - -\n");
 
-	// 예약 내역 있음 (사용자)
-	if (strcmp(info->status, "success") == 0) {
-		check_parameter[0] = '\0';
-		strcat(check_parameter, info->id);
-		strcat(check_parameter, "-");
-		strcat(check_parameter, deviceID);
+	check_parameter[0] = '\0';
+	strcat(check_parameter, info->id);
+	strcat(check_parameter, "-");
+	strcat(check_parameter, deviceID);
 
-		return SUCCESS;
-	}
-	// 제공자
-	else if (strcmp(info->status, "host") == 0) {
-		return HOST;
-	}
-	// 예약 내역 없음
-	else {
-		return ERROR;
-	}
+	return SUCCESS;
 }
 
 /* callback func - save body content to memory */

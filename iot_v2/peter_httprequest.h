@@ -63,8 +63,7 @@ typedef struct reservationInfo {
 	char end_day[3];		// 일
 	char end_hour[3];		// 시
 	char end_min[3];		// 분
-	char out_time[20];
-	
+
 	char* addr[14];			// 구조체 내부 변수 주소 저장
 							// addr[0] = status;
 
