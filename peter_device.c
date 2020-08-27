@@ -144,14 +144,16 @@ int main(int argc, char** argv) {
 		if (isCorrectCar) {
 			printf("correct car...!!\n");
 
-			// check-in url 생성		
-			concat_url(2, tParam);
-			// 입차내역 등록
-			if (pthread_create(&t_id, NULL, t_sendPostRequest, (void*)tParam) < 0) {
-				perror("thread create error: ");
-			}
-			// 스레드가 끝날 때까지 main 종료 방지
-			pthread_join(t_id, NULL);
+			// check-in url 생성
+			if(status == SUCCESS){
+				concat_url(2, tParam);
+				// 입차내역 등록
+				if (pthread_create(&t_id, NULL, t_sendPostRequest, (void*)tParam) < 0) {
+					perror("thread create error: ");
+				}
+				// 스레드가 끝날 때까지 main 종료 방지
+				pthread_join(t_id, NULL);	
+			}					
 		}
 		else {
 			printf("incorrect car...\n");
@@ -167,15 +169,17 @@ int main(int argc, char** argv) {
 		printf("-----------CAR IN----------\n");
 		while (isCar)
 			isOutCar();
-		
-		// check-out url 생성
-		concat_url(3, tParam);
-		// 출차 내역 등록
-		if (pthread_create(&t_id, NULL, t_sendPostRequest, (void*)tParam) < 0) {
-			perror("thread create error: ");
+			
+		if(status == SUCCESS)	{
+			// check-out url 생성
+			concat_url(3, tParam);
+			// 출차 내역 등록
+			if (pthread_create(&t_id, NULL, t_sendPostRequest, (void*)tParam) < 0) {
+				perror("thread create error: ");
+			}
+			// 스레드가 끝날 때까지 main 종료 방지
+			pthread_join(t_id, NULL);
 		}
-		// 스레드가 끝날 때까지 main 종료 방지
-		pthread_join(t_id, NULL);
 
 		//server get output time() requested
 	}
