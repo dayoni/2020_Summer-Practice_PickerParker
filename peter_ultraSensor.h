@@ -9,12 +9,12 @@
 #include <unistd.h>
 #include <signal.h>
 
-#define RED 0
-#define GREEN 1
-#define BLUE 2
-#define TRIG 3
-#define ECHO 4
-#define BUZZER 5
+#define RED 2
+#define GREEN 3
+#define BLUE 0
+#define TRIG 5
+#define ECHO 6
+#define BUZZER 26
 
 static double first_distance;
 static double last_distance;
