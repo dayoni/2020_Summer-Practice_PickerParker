@@ -74,8 +74,8 @@
         - 입차, 출차 시간 전송
 
 ## contributers
-김민지 @mindi1206
 이다연 @dayoni
+김민지 @mindi1206
 박민국 @qkralsrnr206
 
 
